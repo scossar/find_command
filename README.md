@@ -34,6 +34,24 @@ uv run populate.py /tmp/tmux.sqlite3
 
 Running it again updates existing entries without duplicating them.
 
+## Search
+
+Search descriptions for a substring:
+
+```sh
+uv run search.py pane
+uv run search.py "current window"
+uv run search.py pane --database /tmp/tmux.sqlite3
+```
+
+Each matching key and description is printed on one line. If nothing matches,
+the command prints `No matches found.` The database must already be populated.
+
+The query uses `LIKE '%query%'` with a bound SQL parameter. Multiple words match
+as one continuous substring. `%` and `_` in the input retain their SQL wildcard
+meaning. Results have no relevance ranking or guaranteed order. The database
+is opened read-only.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
@@ -54,5 +72,4 @@ manual. Press the prefix before the command key: the `c` entry means `Ctrl-b`,
 then `c`. `C-` means Control and `M-` means Meta (usually Alt).
 
 The dataset covers that section only; separate copy-mode and other mode-specific
-tables elsewhere in the manual are outside this initial dataset. The application
-only populates the database; search will be added later.
+tables elsewhere in the manual are outside this initial dataset.
