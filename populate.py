@@ -2,9 +2,8 @@
 
 import argparse
 import json
-from pathlib import Path
 import sqlite3
-
+from pathlib import Path
 
 DATA_PATH = Path(__file__).parent / "data" / "tmux_key_bindings.json"
 
