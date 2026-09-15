@@ -1,0 +1,223 @@
+{
+  "tmux_version": "3.7c",
+  "source": "tmux(1), DEFAULT KEY BINDINGS",
+  "prefix": "C-b",
+  "bindings": [
+    {
+      "key": "C-b",
+      "description": "Send the prefix key (C-b) through to the application."
+    },
+    {
+      "key": "C-o",
+      "description": "Rotate the panes in the current window forwards."
+    },
+    {
+      "key": "C-z",
+      "description": "Suspend the tmux client."
+    },
+    {
+      "key": "!",
+      "description": "Break the current pane out of the window."
+    },
+    {
+      "key": "\"",
+      "description": "Split the current pane into two, top and bottom."
+    },
+    {
+      "key": "#",
+      "description": "List all paste buffers."
+    },
+    {
+      "key": "$",
+      "description": "Rename the current session."
+    },
+    {
+      "key": "%",
+      "description": "Split the current pane into two, left and right."
+    },
+    {
+      "key": "&",
+      "description": "Kill the current window."
+    },
+    {
+      "key": "'",
+      "description": "Prompt for a window index to select."
+    },
+    {
+      "key": "(",
+      "description": "Switch the attached client to the previous session."
+    },
+    {
+      "key": ")",
+      "description": "Switch the attached client to the next session."
+    },
+    {
+      "key": "*",
+      "description": "Create a new floating pane."
+    },
+    {
+      "key": ",",
+      "description": "Rename the current window."
+    },
+    {
+      "key": "-",
+      "description": "Delete the most recently copied buffer of text."
+    },
+    {
+      "key": ".",
+      "description": "Prompt for an index to move the current window."
+    },
+    {
+      "key": "0 to 9",
+      "description": "Select windows 0 to 9."
+    },
+    {
+      "key": ":",
+      "description": "Enter the tmux command prompt."
+    },
+    {
+      "key": ";",
+      "description": "Move to the previously active pane."
+    },
+    {
+      "key": "=",
+      "description": "Choose which buffer to paste interactively from a list."
+    },
+    {
+      "key": "?",
+      "description": "List all key bindings."
+    },
+    {
+      "key": "D",
+      "description": "Choose a client to detach."
+    },
+    {
+      "key": "L",
+      "description": "Switch the attached client back to the last session."
+    },
+    {
+      "key": "[",
+      "description": "Enter copy mode to copy text or view the history."
+    },
+    {
+      "key": "]",
+      "description": "Paste the most recently copied buffer of text."
+    },
+    {
+      "key": "c",
+      "description": "Create a new window."
+    },
+    {
+      "key": "d",
+      "description": "Detach the current client."
+    },
+    {
+      "key": "f",
+      "description": "Prompt to search for text in open windows."
+    },
+    {
+      "key": "i",
+      "description": "Display some information about the current window."
+    },
+    {
+      "key": "l",
+      "description": "Move to the previously selected window."
+    },
+    {
+      "key": "m",
+      "description": "Mark the current pane (see select-pane -m)."
+    },
+    {
+      "key": "M",
+      "description": "Clear the marked pane."
+    },
+    {
+      "key": "n",
+      "description": "Change to the next window."
+    },
+    {
+      "key": "o",
+      "description": "Select the next pane in the current window."
+    },
+    {
+      "key": "p",
+      "description": "Change to the previous window."
+    },
+    {
+      "key": "q",
+      "description": "Briefly display pane indexes."
+    },
+    {
+      "key": "r",
+      "description": "Force redraw of the attached client."
+    },
+    {
+      "key": "s",
+      "description": "Select a new session for the attached client interactively."
+    },
+    {
+      "key": "t",
+      "description": "Show the time."
+    },
+    {
+      "key": "w",
+      "description": "Choose the current window interactively."
+    },
+    {
+      "key": "x",
+      "description": "Kill the current pane."
+    },
+    {
+      "key": "z",
+      "description": "Toggle zoom state of the current pane."
+    },
+    {
+      "key": "{",
+      "description": "Swap the current pane with the previous pane."
+    },
+    {
+      "key": "}",
+      "description": "Swap the current pane with the next pane."
+    },
+    {
+      "key": "~",
+      "description": "Show previous messages from tmux, if any."
+    },
+    {
+      "key": "Page Up",
+      "description": "Enter copy mode and scroll one page up."
+    },
+    {
+      "key": "Up, Down, Left, Right",
+      "description": "Change to the pane above, below, to the left, or to the right of the current pane."
+    },
+    {
+      "key": "M-1 to M-7",
+      "description": "Arrange panes in one of the seven preset layouts: even-horizontal, even-vertical, main-horizontal, main-horizontal-mirrored, main-vertical, main-vertical-mirrored, or tiled."
+    },
+    {
+      "key": "Space",
+      "description": "Arrange the current window in the next preset layout."
+    },
+    {
+      "key": "M-n",
+      "description": "Move to the next window with a bell or activity marker."
+    },
+    {
+      "key": "M-o",
+      "description": "Rotate the panes in the current window backwards."
+    },
+    {
+      "key": "M-p",
+      "description": "Move to the previous window with a bell or activity marker."
+    },
+    {
+      "key": "C-Up, C-Down, C-Left, C-Right",
+      "description": "Resize the current pane in steps of one cell."
+    },
+    {
+      "key": "M-Up, M-Down, M-Left, M-Right",
+      "description": "Resize the current pane in steps of five cells."
+    }
+  ]
+}
