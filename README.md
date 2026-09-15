@@ -52,6 +52,32 @@ as one continuous substring. `%` and `_` in the input retain their SQL wildcard
 meaning. Results have no relevance ranking or guaranteed order. The database
 is opened read-only.
 
+## Full-text search demonstration
+
+```sh
+uv run search_fts.py "select window"
+uv run search_fts.py "window select" --database /tmp/tmux.sqlite3
+```
+
+`search_fts.py` demonstrates FTS5 with the `porter unicode61` tokenizer:
+
+- Text is split into word tokens, and English word forms are stemmed so that
+  `select` matches `selected`.
+- The input is split into alphanumeric words, with punctuation and underscores
+  acting as separators. Each word is quoted and joined with `AND`, producing
+  `"select" AND "window"`. FTS operators in user input are treated as words.
+- All query words must match somewhere in the description, in any order.
+
+The example matches both `Move to the previously selected window.` and
+`Select the next pane in the current window.` Results follow database ID order;
+this example does not rank them by relevance.
+
+For demonstration, the script builds a temporary FTS index from the populated
+database on each run. The source database is opened read-only, and the index
+disappears when the connection closes. A persistent index maintained when data
+changes would avoid rebuilding it for every search. Python's SQLite library
+must include FTS5 support. No additional Python dependencies are needed.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
