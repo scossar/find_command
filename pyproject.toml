@@ -4,4 +4,6 @@ version = "0.1.0"
 description = "Populate SQLite with default tmux key bindings"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "chromadb>=1.5.9",
+]

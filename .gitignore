@@ -1,5 +1,7 @@
 __pycache__/
 .venv/
+data/chroma/
+:memory:.ses
 *.sqlite3
 *.sqlite3-journal
 *.sqlite3-wal

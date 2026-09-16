@@ -5,8 +5,9 @@ bindings and descriptions in the tmux manual's **DEFAULT KEY BINDINGS** section.
 
 ## Run
 
-Requires mise and uv. The project uses mise-managed Python 3.13 and only the
-Python standard library.
+Requires mise and uv. The project uses mise-managed Python 3.13. SQLite examples
+use the standard library; the embedding example also requires Chroma, installed
+by `uv sync --locked`.
 
 Set up the tools and virtual environment from the project directory:
 
@@ -137,6 +138,43 @@ Run `create_fts.py` again after changing or repopulating `key_bindings`; updates
 are not synchronized automatically. `IF NOT EXISTS` preserves an existing
 table's definition, so rerunning does not change its tokenizer. The earlier
 search scripts still build their own temporary indexes for their demonstrations.
+
+## Generate embeddings with Chroma
+
+After populating SQLite, run:
+
+```sh
+uv sync --locked
+uv run create_embeddings.py
+```
+
+To choose the source database, output directory, or collection:
+
+```sh
+uv run create_embeddings.py --database /tmp/tmux.sqlite3 \
+  --chroma /tmp/tmux-chroma --collection tmux-key-bindings
+```
+
+`create_embeddings.py` reads the original descriptions from SQLite, explicitly
+generates embeddings, and stores both the vectors and descriptions in a local,
+persistent Chroma collection. It uses Chroma's default `all-MiniLM-L6-v2` model,
+which runs locally via ONNX. The first use downloads model files if they are
+not already cached. No API key or embedding service is required.
+
+Each record includes its key binding, prefix, SQLite ID, tmux version, and source
+as metadata. Only the description is embedded, without stemming. IDs are based
+on the unique, case-sensitive key binding. Use a separate collection for a
+different dataset.
+
+The default output directory is `data/chroma/` (ignored by Git), and the default
+collection is `tmux-key-bindings`. Chroma persists writes automatically. Repeated
+runs regenerate embeddings and upsert records without duplicates. This initial
+example does not remove records deleted from SQLite or skip unchanged records.
+Batches are written separately; a failed run may have saved earlier batches,
+and can be rerun. An empty source leaves the collection unchanged.
+
+This stage only generates and stores embeddings; it adds no semantic search
+command. The SQLite source and FTS tables are unchanged.
 
 ## Data
 
