@@ -17,7 +17,6 @@ def search(database: Path, query: str) -> list[tuple[str, str]]:
     # Quoting keeps words such as OR and NOT from becoming FTS operators.
     # SQL parameter binding alone does not escape FTS's own query language.
     match_query = " AND ".join(f'"{word}"' for word in words)
-    print(match_query)
 
     with closing(
         sqlite3.connect(database.resolve().as_uri() + "?mode=ro", uri=True)
