@@ -78,6 +78,32 @@ disappears when the connection closes. A persistent index maintained when data
 changes would avoid rebuilding it for every search. Python's SQLite library
 must include FTS5 support. No additional Python dependencies are needed.
 
+## FTS5 query syntax
+
+`search_fts_query.py` passes your query unchanged to FTS5's `MATCH` operator:
+
+```sh
+uv run search_fts_query.py 'window AND pane'
+uv run search_fts_query.py 'window OR pane'
+uv run search_fts_query.py '"window pane"'
+uv run search_fts_query.py '"current window"'
+uv run search_fts_query.py 'window NOT pane'
+uv run search_fts_query.py '(window OR session) AND select'
+uv run search_fts_query.py 'NEAR(window pane, 5)'
+uv run search_fts_query.py 'win*'
+uv run search_fts_query.py 'description : ^select'
+```
+
+The outer single quotes protect the query from the shell. Inner double quotes
+are passed to FTS5 and specify a phrase. Boolean operators are uppercase.
+Invalid FTS5 syntax produces an error message and a nonzero exit status.
+
+This command keeps Porter stemming, the temporary index, and database ID
+ordering from the previous example. Only `description` is indexed; `key` is
+returned for display. SQL parameter binding is still used, but the query is
+not split into words or rewritten. Use `--database PATH` for another populated
+database. A valid query with no results prints `No matches found.`
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
