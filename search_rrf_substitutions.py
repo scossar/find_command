@@ -1,4 +1,4 @@
-"""Combine stop-word-filtered FTS5 and semantic rankings with RRF."""
+"""Combine FTS5 term substitutions and semantic rankings with RRF."""
 
 import argparse
 import re
@@ -36,6 +36,15 @@ STOP_WORDS = {
 }
 
 
+# Exact whole-word replacements, looked up case-insensitively.
+# Values replace the original FTS terms; they do not expand the query with synonyms.
+SUBSTITUTIONS = {
+    "close": "kill",
+    "bigger": "resize",
+    "smaller": "resize",
+}
+
+
 @dataclass
 class Result:
     key: str
@@ -46,13 +55,16 @@ class Result:
 
 
 def fts_query(query: str) -> str:
-    """OR-join non-stop words; return an empty string if all are excluded."""
+    """Remove stop words, substitute terms, then OR-join them for FTS5."""
     words = re.findall(r"[^\W_]+", query, flags=re.UNICODE)
     if not words:
         raise ValueError("Enter at least one word to search for.")
     # Match stop words case-insensitively, preserving the remaining words.
     # Filtering affects the FTS query only, not the index or semantic query.
     words = [word for word in words if word.casefold() not in STOP_WORDS]
+    # Apply substitutions only here, after stop-word filtering and before
+    # FTS5 tokenization/stemming. Unmapped words retain their original spelling.
+    words = [SUBSTITUTIONS.get(word.casefold(), word) for word in words]
     # Quote terms so user-supplied words cannot become FTS operators.
     return " OR ".join(f'"{word}"' for word in words)
 

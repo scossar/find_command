@@ -305,6 +305,29 @@ The command supports the same options, ranking formula, and output as
 `search_rrf.py`. If every input word is excluded, it skips FTS5 and fuses only
 the semantic results. Empty or punctuation-only input remains an error.
 
+## RRF with stop words and term substitutions
+
+`search_rrf_substitutions.py` adds a `SUBSTITUTIONS` dictionary to the stop-word
+example, initially mapping `close` to `kill`, and `bigger` and `smaller` to
+`resize`:
+
+```sh
+uv run search_rrf_substitutions.py 'close the window'
+uv run search_rrf_substitutions.py 'make the pane bigger'
+```
+
+The first example generates `"kill" OR "window"` for FTS5; the second generates
+`"make" OR "pane" OR "resize"`. Stop words are removed first, then remaining
+words are substituted using case-insensitive, whole-word dictionary lookup.
+Unmapped words are preserved. Substitutions replace terms rather than adding
+alternatives, and do not chain. For example, `closed` is not replaced by the
+`close` mapping: this step happens before FTS5 applies stemming.
+
+Chroma receives the original query unchanged. The script supports the same
+options and RRF behavior as the other examples, including semantic-only results
+when all words are filtered out. Edit `SUBSTITUTIONS` to experiment with other
+single-word replacements. The previous examples remain separate for comparison.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
