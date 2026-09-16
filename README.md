@@ -224,6 +224,34 @@ threshold: a nonempty collection returns nearest neighbors even for an unrelated
 query. The command uses the existing collection and does not regenerate stored
 embeddings. To include changed SQLite descriptions, rerun `create_embeddings.py`.
 
+## FTS5 candidates followed by semantic ranking
+
+With both `create_fts.py` and `create_embeddings.py` run on the same source:
+
+```sh
+uv run search_fts_semantic.py 'window' 'close the current window'
+uv run search_fts_semantic.py 'pane' 'make more room' --results 3
+uv run search_fts_semantic.py 'window OR pane' 'switch to the previous one'
+```
+
+The first argument is an FTS5 expression; the second is a natural-language
+semantic query. The Python `search` function accepts both queries separately,
+along with the SQLite path, Chroma path, collection name, and result limit.
+The command also supports `--database`, `--chroma`, and `--collection`.
+
+All FTS matches become candidates. Their IDs restrict Chroma's vector search
+before retrieval, and semantic distance alone determines the final order.
+BM25 scores are not used, and `--results` limits only the final output. Lower
+distances rank first. No FTS matches means no results, with no semantic fallback.
+
+For example, `'window' 'close the current window'` can return “Kill the current
+window.” Requiring `'close AND window'` excludes it before semantic ranking can
+help. This demonstrates the candidate filter's effect on what can be retrieved.
+
+Keep both indexes current by rerunning their creation scripts after source
+changes. Missing candidate IDs in Chroma produce an error rather than silently
+dropping candidates; changed descriptions with existing IDs are not detected.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
