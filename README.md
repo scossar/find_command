@@ -288,6 +288,23 @@ Use `--database`, `--chroma`, and `--collection` to select matching indexes.
 Refresh both after source changes. When a key appears in both lists, its displayed
 description comes from FTS5; this example does not detect stale index contents.
 
+## RRF with stop words excluded
+
+`search_rrf_stop_words.py` is a separate version of the RRF example with a
+`STOP_WORDS` set applied to the FTS5 query:
+
+```sh
+uv run search_rrf_stop_words.py 'close the window'
+```
+
+The generated FTS5 query is `"close" OR "window"`. Stop-word matching is
+case-insensitive and uses whole extracted words. The original query, including
+stop words, still goes to Chroma. The stored FTS index is unchanged.
+
+The command supports the same options, ranking formula, and output as
+`search_rrf.py`. If every input word is excluded, it skips FTS5 and fuses only
+the semantic results. Empty or punctuation-only input remains an error.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
