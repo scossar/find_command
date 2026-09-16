@@ -173,8 +173,30 @@ example does not remove records deleted from SQLite or skip unchanged records.
 Batches are written separately; a failed run may have saved earlier batches,
 and can be rerun. An empty source leaves the collection unchanged.
 
-This stage only generates and stores embeddings; it adds no semantic search
-command. The SQLite source and FTS tables are unchanged.
+The embedding script only generates and stores embeddings. The SQLite source
+and FTS tables are unchanged.
+
+## Semantic search
+
+After running `create_embeddings.py`, query the existing Chroma collection:
+
+```sh
+uv run search_chroma.py 'close the current window'
+uv run search_chroma.py 'make a new terminal' --results 3
+uv run search_chroma.py 'switch panes' --chroma /tmp/tmux-chroma \
+  --collection tmux-key-bindings
+```
+
+The query is embedded with the same local model as the descriptions. Chroma
+returns the nearest stored vectors, and the command prints their key bindings,
+descriptions, and distances, closest first. Lower distances mean closer vectors;
+they are not confidence percentages. This is natural-language search, so `AND`,
+`OR`, and quotes do not act as FTS5 operators.
+
+The default is five results, capped at the collection size. There is no relevance
+threshold: a nonempty collection returns nearest neighbors even for an unrelated
+query. The command uses the existing collection and does not regenerate stored
+embeddings. To include changed SQLite descriptions, rerun `create_embeddings.py`.
 
 ## Data
 
