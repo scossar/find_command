@@ -85,19 +85,27 @@ def search(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("fts_query", help="FTS5 expression selecting eligible descriptions")
+    parser.add_argument(
+        "fts_query", help="FTS5 expression selecting eligible descriptions"
+    )
     parser.add_argument("semantic_query", help="Natural-language query for ranking")
     parser.add_argument(
         "--database", type=Path, default=Path("tmux_key_bindings.sqlite3")
     )
     parser.add_argument("--chroma", type=Path, default=Path("data/chroma"))
     parser.add_argument("--collection", default="tmux-key-bindings")
-    parser.add_argument("--results", type=int, default=5, help="Maximum results (default: 5)")
+    parser.add_argument(
+        "--results", type=int, default=5, help="Maximum results (default: 5)"
+    )
     args = parser.parse_args()
     try:
         rows = search(
-            args.database, args.chroma, args.fts_query, args.semantic_query,
-            args.collection, args.results,
+            args.database,
+            args.chroma,
+            args.fts_query,
+            args.semantic_query,
+            args.collection,
+            args.results,
         )
     except (sqlite3.Error, ChromaError, ValueError) as error:
         parser.exit(1, f"Search failed: {error}\n")

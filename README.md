@@ -252,6 +252,42 @@ Keep both indexes current by rerunning their creation scripts after source
 changes. Missing candidate IDs in Chroma produce an error rather than silently
 dropping candidates; changed descriptions with existing IDs are not detected.
 
+## Reciprocal Rank Fusion (RRF)
+
+With both persistent indexes populated, run:
+
+```sh
+uv run search_rrf.py 'close the window'
+uv run search_rrf.py 'close the window' --candidates 10 --results 5 --k 60
+```
+
+`search_rrf.py` reuses the BM25 and Chroma search functions. It splits the input
+into alphanumeric words and OR-joins them for FTS5: `close the window` becomes
+`"close" OR "the" OR "window"`. Quotes preserve literal words, including words
+that resemble FTS operators. Punctuation and underscores separate words. Common
+words such as `the` are retained. Chroma receives the original input unchanged.
+
+The searches run independently. Up to `--candidates` entries from each ranked
+list contribute to the union of results, deduplicated by case-sensitive key.
+For each record, the score is the sum of `1 / (k + rank)` from the lists where
+it appears. Ranks start at 1; absence contributes zero. Both lists have equal
+weight, and raw BM25 scores and vector distances are not combined.
+
+Higher RRF scores rank first; ties use key order. Output includes the generated
+FTS query, fused score, and rank in each source list (`-` means absent from that
+list's candidate window). The default is 20 candidates per list and five final
+results. `k` defaults to 60; larger values reduce differences between rank
+contributions. These scores are not probabilities.
+
+The lexical helper currently retrieves all FTS matches before slicing to the
+candidate limit in Python; a larger-scale implementation could apply that limit
+in SQL. Changing the candidate limit can change the fused ranking. Semantic-only
+results remain eligible even when FTS5 has no matches.
+
+Use `--database`, `--chroma`, and `--collection` to select matching indexes.
+Refresh both after source changes. When a key appears in both lists, its displayed
+description comes from FTS5; this example does not detect stale index contents.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
