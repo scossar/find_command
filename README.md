@@ -104,6 +104,40 @@ returned for display. SQL parameter binding is still used, but the query is
 not split into words or rewritten. Use `--database PATH` for another populated
 database. A valid query with no results prints `No matches found.`
 
+## Persistent FTS5 table
+
+After populating the database, create a persistent index:
+
+```sh
+uv run create_fts.py
+# Or select another populated database:
+uv run create_fts.py /tmp/tmux.sqlite3
+```
+
+`create_fts.py` creates `main.key_bindings_fts` with Porter stemming and copies
+the keys and descriptions into it. The table and index remain in the database
+after the script exits. Each run replaces the FTS contents from `key_bindings`
+in one transaction, so rerunning it refreshes the index without duplicates.
+It does not modify the source table.
+
+Query it from a new SQLite CLI session:
+
+```sh
+sqlite3 tmux_key_bindings.sqlite3
+```
+
+```sql
+SELECT key, description
+FROM main.key_bindings_fts
+WHERE key_bindings_fts MATCH 'select AND window'
+ORDER BY rowid;
+```
+
+Run `create_fts.py` again after changing or repopulating `key_bindings`; updates
+are not synchronized automatically. `IF NOT EXISTS` preserves an existing
+table's definition, so rerunning does not change its tokenizer. The earlier
+search scripts still build their own temporary indexes for their demonstrations.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local
