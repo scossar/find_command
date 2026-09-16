@@ -139,6 +139,32 @@ are not synchronized automatically. `IF NOT EXISTS` preserves an existing
 table's definition, so rerunning does not change its tokenizer. The earlier
 search scripts still build their own temporary indexes for their demonstrations.
 
+## BM25-ranked full-text search
+
+After running `create_fts.py`, query the persistent index with BM25 ranking:
+
+```sh
+uv run search_bm25.py 'pane'
+uv run search_bm25.py 'window OR pane'
+uv run search_bm25.py '"current window"' --database /tmp/tmux.sqlite3
+```
+
+`search_bm25.py` passes the FTS5 query unchanged to `MATCH` and orders the
+matching records by `bm25(key_bindings_fts)`. It prints the score, key, and
+description for every match. SQLite's BM25 scores are negated, so lower (more
+negative) scores rank first. Equal scores are ordered by row ID. Scores are
+not confidence percentages and are not directly comparable to Chroma distances.
+
+BM25 uses term frequency, how common a term is across the indexed records, and
+document length to rank matches. It does not expand the candidate set: an `AND`
+query still requires both terms, while `OR` allows either. Porter stemming
+comes from the persistent table's tokenizer configuration.
+
+The command opens SQLite read-only and does not create or refresh the index.
+Run `create_fts.py` again after changing the source data. Missing tables and
+invalid query syntax produce errors; valid queries with no matches print
+`No matches found.`
+
 ## Generate embeddings with Chroma
 
 After populating SQLite, run:
