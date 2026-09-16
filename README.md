@@ -328,6 +328,44 @@ options and RRF behavior as the other examples, including semantic-only results
 when all words are filtered out. Edit `SUBSTITUTIONS` to experiment with other
 single-word replacements. The previous examples remain separate for comparison.
 
+## FTS5 vocabulary and missing terms
+
+After creating the persistent FTS5 index:
+
+```sh
+uv run create_fts_vocab.py
+uv run search_fts_vocab.py 'selected window nonexistentword'
+```
+
+`create_fts_vocab.py` creates `key_bindings_vocab` using
+`fts5vocab(key_bindings_fts, row)`. It exposes the current index directly, so
+there is no vocabulary data to populate or refresh separately. Its columns are
+`term` (indexed token), `doc` (number of records containing it), and `cnt`
+(total occurrences). The table persists and reflects subsequent FTS index changes.
+
+`search_fts_vocab.search(connection, terms)` returns `(results, missing)`:
+BM25-ranked `(key, description, score)` rows and a set of missing original terms.
+Inputs are individual words; the CLI splits text into words and OR-joins them.
+It does not apply stop words or substitutions. Missing means absent from the
+entire FTS index, not merely absent from the top results.
+
+The vocabulary contains stems. To avoid reporting `selected` as missing when
+`select` exists, the search example normalizes terms using SQLite's own
+`porter unicode61` tokenizer in a small, separate in-memory FTS table. This
+matches the configuration in `create_fts.py`; update both if you change the
+index tokenizer. Original spellings are preserved in the missing-term set.
+The function accepts an empty list (returning empty results and an empty set)
+and rejects terms that tokenize to zero or multiple words.
+
+For manual inspection:
+
+```sql
+SELECT term, doc, cnt FROM key_bindings_vocab ORDER BY term;
+```
+
+The setup script accepts a positional database path; the search command uses
+`--database PATH`. Searches leave the persistent database unchanged.
+
 ## Data
 
 `data/tmux_key_bindings.json` contains 54 entries transcribed from the local

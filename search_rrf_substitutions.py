@@ -42,6 +42,8 @@ SUBSTITUTIONS = {
     "close": "kill",
     "bigger": "resize",
     "smaller": "resize",
+    "2": "two",
+    "go": "move",
 }
 
 
