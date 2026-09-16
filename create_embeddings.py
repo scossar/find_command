@@ -4,8 +4,10 @@ import argparse
 import sqlite3
 from contextlib import closing
 from pathlib import Path
+from typing import cast
 
 import chromadb
+from chromadb.api.types import Embeddable, EmbeddingFunction
 from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 
 
@@ -32,9 +34,13 @@ def create_embeddings(
     # The model files are downloaded and cached on the first use if needed.
     embedding_function = DefaultEmbeddingFunction()
     client = chromadb.PersistentClient(path=str(chroma_path))
+    # Chroma types this parameter as accepting documents OR images, but its
+    # default embedding function accepts only documents. This collection is
+    # text-only, so cast at the API boundary to bridge that typing mismatch.
+    # cast does not change the function or add image support at runtime.
     collection = client.get_or_create_collection(
         name=collection_name,
-        embedding_function=embedding_function,
+        embedding_function=cast(EmbeddingFunction[Embeddable], embedding_function),
         metadata={"embedding_model": "all-MiniLM-L6-v2"},
     )
 
