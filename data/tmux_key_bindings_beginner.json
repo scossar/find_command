@@ -1,0 +1,277 @@
+{
+  "tmux_version": "3.7c",
+  "source": "tmux(1), DEFAULT KEY BINDINGS",
+  "prefix": "C-b",
+  "bindings": [
+    {
+      "key": "C-b",
+      "description": "Send the prefix key (C-b) through to the application.",
+      "augmented_description": "Make Ctrl-b go to the program instead of being handled by tmux."
+    },
+    {
+      "key": "C-o",
+      "description": "Rotate the panes in the current window forwards.",
+      "augmented_description": "Move each split terminal section forward to the next position."
+    },
+    {
+      "key": "C-z",
+      "description": "Suspend the tmux client.",
+      "augmented_description": "Temporarily pause this tmux view and return to the normal terminal."
+    },
+    {
+      "key": "!",
+      "description": "Break the current pane out of the window.",
+      "augmented_description": "Turn the current split terminal section into its own tab."
+    },
+    {
+      "key": "\"",
+      "description": "Split the current pane into two, top and bottom.",
+      "augmented_description": "Divide the terminal into a top section and a bottom section."
+    },
+    {
+      "key": "#",
+      "description": "List all paste buffers.",
+      "augmented_description": "Show all text previously copied inside tmux."
+    },
+    {
+      "key": "$",
+      "description": "Rename the current session.",
+      "augmented_description": "Rename the current workspace containing your tabs."
+    },
+    {
+      "key": "%",
+      "description": "Split the current pane into two, left and right.",
+      "augmented_description": "Divide the terminal into a left section and a right section."
+    },
+    {
+      "key": "&",
+      "description": "Kill the current window.",
+      "augmented_description": "Close the current terminal tab."
+    },
+    {
+      "key": "'",
+      "description": "Prompt for a window index to select.",
+      "augmented_description": "Go to a terminal tab by typing its number."
+    },
+    {
+      "key": "(",
+      "description": "Switch the attached client to the previous session.",
+      "augmented_description": "Go to the previous workspace of terminal tabs."
+    },
+    {
+      "key": ")",
+      "description": "Switch the attached client to the next session.",
+      "augmented_description": "Go to the next workspace of terminal tabs."
+    },
+    {
+      "key": "*",
+      "description": "Create a new floating pane.",
+      "augmented_description": "Open a temporary terminal box that floats over the screen."
+    },
+    {
+      "key": ",",
+      "description": "Rename the current window.",
+      "augmented_description": "Rename the current terminal tab."
+    },
+    {
+      "key": "-",
+      "description": "Delete the most recently copied buffer of text.",
+      "augmented_description": "Delete the most recently copied text from tmux."
+    },
+    {
+      "key": ".",
+      "description": "Prompt for an index to move the current window.",
+      "augmented_description": "Move the current terminal tab to a different number."
+    },
+    {
+      "key": "0 to 9",
+      "description": "Select windows 0 to 9.",
+      "augmented_description": "Jump directly to terminal tab 0 through 9."
+    },
+    {
+      "key": ":",
+      "description": "Enter the tmux command prompt.",
+      "augmented_description": "Open the place where you can type a tmux command."
+    },
+    {
+      "key": ";",
+      "description": "Move to the previously active pane.",
+      "augmented_description": "Move the cursor focus back to the terminal section used last."
+    },
+    {
+      "key": "=",
+      "description": "Choose which buffer to paste interactively from a list.",
+      "augmented_description": "Choose previously copied text from a list and paste it."
+    },
+    {
+      "key": "?",
+      "description": "List all key bindings.",
+      "augmented_description": "Show all available tmux keyboard shortcuts."
+    },
+    {
+      "key": "D",
+      "description": "Choose a client to detach.",
+      "augmented_description": "Choose another connected tmux screen or user to disconnect."
+    },
+    {
+      "key": "L",
+      "description": "Switch the attached client back to the last session.",
+      "augmented_description": "Return to the workspace you were using before this one."
+    },
+    {
+      "key": "[",
+      "description": "Enter copy mode to copy text or view the history.",
+      "augmented_description": "Scroll back through earlier terminal output or select text to copy."
+    },
+    {
+      "key": "]",
+      "description": "Paste the most recently copied buffer of text.",
+      "augmented_description": "Paste the text most recently copied inside tmux."
+    },
+    {
+      "key": "c",
+      "description": "Create a new window.",
+      "augmented_description": "Open a new terminal tab."
+    },
+    {
+      "key": "d",
+      "description": "Detach the current client.",
+      "augmented_description": "Leave tmux while keeping everything running in the background."
+    },
+    {
+      "key": "f",
+      "description": "Prompt to search for text in open windows.",
+      "augmented_description": "Find text in any open terminal tab."
+    },
+    {
+      "key": "i",
+      "description": "Display some information about the current window.",
+      "augmented_description": "Show details about the current terminal tab."
+    },
+    {
+      "key": "l",
+      "description": "Move to the previously selected window.",
+      "augmented_description": "Return to the terminal tab you were viewing before this one."
+    },
+    {
+      "key": "m",
+      "description": "Mark the current pane (see select-pane -m).",
+      "augmented_description": "Remember the current terminal section for a later action."
+    },
+    {
+      "key": "M",
+      "description": "Clear the marked pane.",
+      "augmented_description": "Forget the terminal section that was previously remembered."
+    },
+    {
+      "key": "n",
+      "description": "Change to the next window.",
+      "augmented_description": "Go to the next terminal tab."
+    },
+    {
+      "key": "o",
+      "description": "Select the next pane in the current window.",
+      "augmented_description": "Move the cursor focus to the next split terminal section."
+    },
+    {
+      "key": "p",
+      "description": "Change to the previous window.",
+      "augmented_description": "Go to the previous terminal tab."
+    },
+    {
+      "key": "q",
+      "description": "Briefly display pane indexes.",
+      "augmented_description": "Temporarily show a number on every split terminal section."
+    },
+    {
+      "key": "r",
+      "description": "Force redraw of the attached client.",
+      "augmented_description": "Refresh the screen if the tmux display looks wrong."
+    },
+    {
+      "key": "s",
+      "description": "Select a new session for the attached client interactively.",
+      "augmented_description": "Choose and switch to another workspace of terminal tabs."
+    },
+    {
+      "key": "t",
+      "description": "Show the time.",
+      "augmented_description": "Show a large clock in the terminal."
+    },
+    {
+      "key": "w",
+      "description": "Choose the current window interactively.",
+      "augmented_description": "Choose and switch to an open terminal tab from a list."
+    },
+    {
+      "key": "x",
+      "description": "Kill the current pane.",
+      "augmented_description": "Close the current split terminal section."
+    },
+    {
+      "key": "z",
+      "description": "Toggle zoom state of the current pane.",
+      "augmented_description": "Make the current terminal section fill the screen, or restore it."
+    },
+    {
+      "key": "{",
+      "description": "Swap the current pane with the previous pane.",
+      "augmented_description": "Exchange the current terminal section with the previous one."
+    },
+    {
+      "key": "}",
+      "description": "Swap the current pane with the next pane.",
+      "augmented_description": "Exchange the current terminal section with the next one."
+    },
+    {
+      "key": "~",
+      "description": "Show previous messages from tmux, if any.",
+      "augmented_description": "Show recent tmux notices and error messages."
+    },
+    {
+      "key": "Page Up",
+      "description": "Enter copy mode and scroll one page up.",
+      "augmented_description": "Scroll back by one screen of earlier terminal output."
+    },
+    {
+      "key": "Up, Down, Left, Right",
+      "description": "Change to the pane above, below, to the left, or to the right of the current pane.",
+      "augmented_description": "Move the cursor focus to the terminal section above, below, left, or right."
+    },
+    {
+      "key": "M-1 to M-7",
+      "description": "Arrange panes in one of the seven preset layouts: even-horizontal, even-vertical, main-horizontal, main-horizontal-mirrored, main-vertical, main-vertical-mirrored, or tiled.",
+      "augmented_description": "Rearrange the split terminal sections using a chosen preset design."
+    },
+    {
+      "key": "Space",
+      "description": "Arrange the current window in the next preset layout.",
+      "augmented_description": "Cycle through different arrangements of the split terminal sections."
+    },
+    {
+      "key": "M-n",
+      "description": "Move to the next window with a bell or activity marker.",
+      "augmented_description": "Go to the next terminal tab that needs your attention."
+    },
+    {
+      "key": "M-o",
+      "description": "Rotate the panes in the current window backwards.",
+      "augmented_description": "Move each split terminal section backward to the previous position."
+    },
+    {
+      "key": "M-p",
+      "description": "Move to the previous window with a bell or activity marker.",
+      "augmented_description": "Go to the previous terminal tab that needs your attention."
+    },
+    {
+      "key": "C-Up, C-Down, C-Left, C-Right",
+      "description": "Resize the current pane in steps of one cell.",
+      "augmented_description": "Make the current terminal section slightly larger or smaller in any direction."
+    },
+    {
+      "key": "M-Up, M-Down, M-Left, M-Right",
+      "description": "Resize the current pane in steps of five cells.",
+      "augmented_description": "Make the current terminal section larger or smaller in bigger steps."
+    }
+  ]
+}
