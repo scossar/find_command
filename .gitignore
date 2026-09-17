@@ -1,6 +1,7 @@
 __pycache__/
 .venv/
 data/chroma/
+data/chroma_augmented/
 :memory:.ses
 *.sqlite3
 *.sqlite3-journal
