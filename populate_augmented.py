@@ -5,7 +5,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-DATA_PATH = Path(__file__).parent / "data" / "tmux_key_bindings_beginner.json"
+DATA_PATH = Path(__file__).parent / "data" / "tmux_key_bindings_augmented.json"
 
 
 def populate(database: Path) -> int:

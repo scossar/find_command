@@ -41,7 +41,7 @@ def create_embeddings(
     # Process in batches
     for start in range(0, len(rows), 128):
         batch = rows[start : start + 128]
-        # descriptions = [row["description"] for row in batch]
+        descriptions = [row["description"] for row in batch]
         augmented_descriptions = [row["augmented_description"] for row in batch]
 
         embeddings = embedding_function(augmented_descriptions)
@@ -49,7 +49,7 @@ def create_embeddings(
         collection.upsert(
             ids=[f"tmux:{row['key']}" for row in batch],
             embeddings=embeddings,
-            documents=augmented_descriptions,
+            documents=descriptions,
             metadatas=[
                 {
                     "sqlite_id": row["id"],
